@@ -1,0 +1,279 @@
+:root {
+  --primary-background: rgba(246, 246, 246, 1);
+  --secondary-background: rgba(229, 229, 229, 1);
+  --primary-color: rgba(82, 82, 82, 1);
+  --primary-chip-color: rgba(196, 196, 196, 1);
+  --card-background: #fff;
+  --font-color-primary: #333;
+  --label-font-size: 14px;
+  --font-color-secondary: #959595;
+  --font-color-title: rgba(98, 98, 98, 1);
+  --primary-input-border: 1px solid #d4d4d4;
+  --input-height: 40px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+}
+h1 {
+  font-size: 48px;
+}
+p {
+  font-size: 14px;
+}
+fieldset {
+  border: none;
+}
+table {
+  width: 400px;
+  font-size: 14px;
+  border-collapse: collapse;
+  height: 100px;
+}
+td,
+th {
+  text-align: left;
+}
+td {
+  margin-right: 4px;
+}
+th {
+  position: sticky;
+  top: 0;
+  background-color: #333;
+  color: white;
+}
+select {
+  border: var(--primary-input-border);
+  border-radius: 6px;
+  height: var(--input-height);
+  background: var(--card-background) url('./img/chevron.svg') no-repeat 98% 50%;
+  color: var(--font-color-secondary);
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0.6em 1.4em 0.5em 0.8em;
+  line-height: 1.3;
+}
+input,
+label {
+  /* margin: 4px; */
+}
+input[type='text'] {
+  background: #fff;
+  outline: none;
+  height: var(--input-height);
+  border-radius: 6px;
+  border: var(--primary-input-border);
+  color: var(--font-color-secondary);
+  padding: 0.6em 1.4em 0.5em 0.8em;
+  line-height: 1.3;
+  width: 167px;
+}
+label {
+  color: var(--font-color-primary);
+  font-size: var(--label-font-size);
+  margin-bottom: 6px;
+}
+button {
+  width: 124px;
+  height: 48px;
+  border-radius: 5px;
+  font-family: 'Raleway';
+  color: white;
+  transition: all 0.5s ease-out;
+}
+button:hover {
+  background: #959595;
+  color: white;
+  border: none;
+}
+.container {
+  max-width: 1196px;
+  margin: auto;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.btn {
+  margin-top: 14px;
+  height: 48px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-family: 'Raleway';
+  background: var(--primary-color);
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 144px;
+  align-self: flex-end;
+}
+.app-container {
+  background: var(--primary-background);
+  width: 100%;
+  height: 583px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 40px;
+}
+.app {
+  background: var(--card-background);
+  width: 1012px;
+  height: 504px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  display: flex;
+}
+.title-area {
+  width: 35%;
+  background: var(--secondary-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: right;
+}
+.title-area-showcase {
+  display: flex;
+  flex-direction: column;
+}
+.profile-avatar {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  background: var(--primary-chip-color);
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+}
+.logo-brand {
+  margin-top: -4px;
+  color: var(--font-color-title);
+}
+.main-area {
+  display: flex;
+  flex-direction: column;
+  width: 65%;
+}
+
+.guide-container {
+  display: flex;
+  flex-direction: row;
+  margin: 20px 40px;
+  margin-bottom: 0px;
+  border: 1px solid red;
+  width: auto;
+  justify-content: space-evenly;
+}
+.define-page,
+.assemble-page {
+  margin: 20px 40px;
+}
+.navigation-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 40px;
+}
+.nav-button-left {
+  margin-right: 8px;
+}
+.guide-step {
+  width: 58px;
+  height: 84px;
+  color: var(--primary-chip-color);
+  font-size: 15px;
+  font-variant: small-caps;
+  text-align: center;
+  line-height: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.selected {
+  color: rgba(98, 98, 98, 1);
+  font-weight: bold;
+}
+.selected .ellipse-chip {
+  background: #8f8f8f;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.line {
+  width: 100%;
+  height: 3px;
+  background: rgba(143, 143, 143, 0.7);
+  justify-content: center;
+  margin-top: 32px;
+}
+.ellipse-chip {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  background: var(--primary-chip-color);
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+}
+.select-category {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+
+  border: 1px solid black;
+}
+.select-base {
+  height: 40px;
+  border: 1px solid black;
+}
+
+.input-group-container {
+  display: flex;
+  border: white 1px solid;
+}
+.input-group {
+  display: flex;
+}
+.column {
+  flex-direction: column;
+  flex-grow: 1;
+}
+.column-tight {
+  flex-direction: column;
+  width: 200px;
+}
+.center {
+  display: flex;
+  flex-grow: 1;
+}
+.row {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+#selectCategory {
+  width: 200px;
+}
+.radio-input {
+  width: 120px;
+}
+.radio-input label {
+  margin: 4px 6px;
+}
+.check-input {
+  width: 200px;
+}
+.check-input label {
+  margin: 4px 6px;
+}

@@ -1,0 +1,34 @@
+@using MoodSwings.Services;
+
+@page "/home"
+
+@inject AuthenticationService AuthService
+@inject ConfigurationService ConfService
+
+<div class="app">
+    <section class="title-area">
+        <div class="title-area-showcase">
+            <div class="profile-avatar">
+                <img src="./css/img/user-icon.svg" width="24px" alt="" srcset="">
+            </div>
+            <Logo/>
+            <p>Find the tracks matching your current mood</p>
+            @if(!_userIsAuthenticated)
+            {
+
+                <a href="@ConfService.AuthURL" class="btn btn-primary">Sign in to Spotify</a>
+            }
+            
+        </div>
+    </section>
+    <section class="main-area">
+        <section class="main-area-top">
+
+        </section>
+    </section>
+</div>
+
+@functions{
+    private bool _userIsAuthenticated => AuthService.IsAuthenticated;
+
+}

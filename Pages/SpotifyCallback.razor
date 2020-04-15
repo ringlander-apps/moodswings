@@ -1,0 +1,68 @@
+@page "/spotify-auth"
+
+@using Microsoft.AspNetCore.WebUtilities;
+@using MoodSwings.Shared.Models;
+@using MoodSwings.Services;
+
+@inject NavigationManager navigationManager
+@inject AuthenticationService AuthService;
+@inject SpotifyService SpotifyService;
+
+
+@functions {
+    private IDictionary<string, string> queryParameters;
+    private bool tokenOk = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
+            var baseUri = uri.GetComponents(UriComponents.Scheme | UriComponents.Host | UriComponents.Port | UriComponents.Path, UriFormat.UriEscaped);
+            var query = QueryHelpers.ParseQuery(uri.Query);
+            queryParameters = query.SelectMany(x => x.Value, (col, value) => new KeyValuePair<string, string>(col.Key, value)).ToList().ToDictionary(pair => pair.Key, pair => pair.Value);
+
+            var token = await CreateTokenData();
+
+            if (token != null)
+            {
+                tokenOk = true;
+                var user = await SpotifyService.GetCurrentUserProfile(token);
+
+                System.Console.WriteLine(user.Email);
+
+                AuthService.Token = token;
+                AuthService.User = user;
+
+                navigationManager.NavigateTo("/");
+            }
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+    }
+    protected async Task<AuthenticationToken> CreateTokenData()
+    {
+
+        if (queryParameters != null)
+        {
+            var token = new AuthenticationToken();
+            token.AccessToken = queryParameters["access_token"];
+            token.RefreshToken = queryParameters["refresh_token"];
+            token.ExpiresIn = Double.Parse(queryParameters["expires_in"]);
+            token.ExpiresOn = DateTime.Now.AddSeconds(token.ExpiresIn);
+
+            return token;
+        }
+        else
+        {
+            return null;
+        }
+
+
+    }
+
+
+}
