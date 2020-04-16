@@ -1,0 +1,14 @@
+@using System.ComponentModel
+
+<div>
+  <div>@Title</div>
+  <div>@ChildContent</div>
+
+  <button onclick="@OnClick">Trigger a Parent component method</button>
+</div>
+
+@functions {
+  [Parameter] public string Title { get; set; }
+      [Parameter] public RenderFragment ChildContent { get; set; }
+      [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+}

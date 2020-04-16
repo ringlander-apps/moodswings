@@ -1,0 +1,17 @@
+@using MoodSwings.Shared.Models.ViewModels;
+@using MoodSwings.Shared.Components.Utilities;
+@inject MoodSwings.Shared.Models.ViewModels.SelectCategoryViewModel Model;
+
+<div class="input-group row" id="selectCategory">
+  <label class="input-label">Select Search Category</label>
+</div>
+<RadioButtonList RadioName="searchCategory"
+  ContainerCss="center"
+  Choices="@Model.AvailableCategories"
+  CurrentChoice="@Model.SelectedCategory"
+  MakeChoice="@Model.SetCategory"
+  />
+
+@code{
+      
+}

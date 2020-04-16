@@ -1,0 +1,36 @@
+<div class="@ContainerCss">
+  @foreach (var choice in Choices)
+  {
+    @if(choice==CurrentChoice)
+    {
+      <div class="input-group row radio-input" @onclick="@(e => MakeChoice.InvokeAsync(choice))">
+        <input type="radio" name="@RadioName" checked/>
+        <label>@choice</label>
+      </div>
+    }
+    else
+    {
+      <div class="input-group row radio-input" @onclick="@(e=> MakeChoice.InvokeAsync(choice))">
+        <input type="radio" name="@RadioName"/>
+        <label>@choice</label>
+      </div>
+    }
+    
+  }
+</div>
+
+@functions{
+  [Parameter] public string RadioName { get; set; }
+
+      [Parameter] public List<string> Choices { get; set; }
+
+      [Parameter] public string CurrentChoice { get; set; }
+
+      [Parameter] public string ContainerCss { get; set; }
+
+      [Parameter] public EventCallback<string> MakeChoice { get; set; }
+
+      [Parameter] public EventCallback<MouseEventArgs> RadioOnClick { get; set; }
+
+      [Parameter] public Action<string> OnSelectionMade { get; set; }
+}

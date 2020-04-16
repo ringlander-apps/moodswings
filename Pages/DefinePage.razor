@@ -1,0 +1,40 @@
+@using MoodSwings.Services;
+@using MoodSwings.Shared.Models.ViewModels;
+@using MoodSwings.Shared.Models;
+@using MoodSwings.Shared;
+@using MoodSwings.Shared.Components;
+@using MoodSwings.Shared.Components.Utilities;
+
+@inject MoodSwings.Shared.Models.ViewModels.SelectCategoryViewModel VM
+
+<div class="define-page">
+    <div class="select-base">
+        <div class="input-group-container">
+            <CategorySelector/>
+            <SelectionViewModelRegion ViewModel="@VM">
+                <p>Selected Category: @VM.SelectedCategory</p>
+            </SelectionViewModelRegion>
+            
+        </div>
+
+    </div>
+    <div class="input-group-container">
+        <div class="input-group-column">
+            <label for="">Playlist selections</label>
+        </div>
+    </div>
+
+</div>
+
+@functions{
+
+    private string MessageText { get; set; }
+    private void ShowMessage(MouseEventArgs e)
+    {
+        MessageText = e.ToString();
+    }
+    private void SetCategory(string s)
+    {
+        VM.SetCategory(s);
+    }
+}

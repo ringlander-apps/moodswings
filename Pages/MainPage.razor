@@ -1,4 +1,6 @@
 @using MoodSwings.Services;
+@using MoodSwings.Shared.Components;
+@using MoodSwings.Shared.Models.ViewModels;
 
 @page "/home"
 
@@ -15,7 +17,6 @@
             <p>Find the tracks matching your current mood</p>
             @if(!_userIsAuthenticated)
             {
-
                 <a href="@ConfService.AuthURL" class="btn btn-primary">Sign in to Spotify</a>
             }
             
@@ -23,12 +24,40 @@
     </section>
     <section class="main-area">
         <section class="main-area-top">
-
+            <div class="guide-container">
+                @if(_steps!=null){
+                    foreach (var step in _steps)
+                    {
+                        <GuideStep Caption=@step.Caption IsSelected=@CheckSelected(step.Id) StepNumber=@step.Id />
+                        if(@step.Id<_steps.Count){
+                            <div class="line"></div>
+                        }
+                    }
+                }
+            </div>
+        </section>
+        <section class="main-area-content">
+            <DefinePage/>
         </section>
     </section>
 </div>
 
 @functions{
     private bool _userIsAuthenticated => AuthService.IsAuthenticated;
+    private bool _modelIsValid = false;
+    private List<StepModel> _steps = new List<StepModel>
+    {
+    new StepModel{Id=1,Caption="Define",IsSelected=true},
+    new StepModel{Id=2,Caption="Assemble",IsSelected=false},
+    new StepModel{Id=3,Caption="Enjoy!",IsSelected=false}
+    };
+
+
+    bool CheckSelected(int id)
+    {
+        //Should be checked in app state
+        return id.Equals(1) ? true : false;
+
+    }
 
 }

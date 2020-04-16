@@ -1,0 +1,10 @@
+<div class="guide-step @((IsSelected ? "selected":""))">
+  <div class="ellipse-chip">@StepNumber</div>
+  <div class="guide-step-caption">@Caption</div>
+</div>
+
+@functions {
+    [Parameter] public bool IsSelected { get; set; } = false;
+    [Parameter] public string Caption { get; set; }
+    [Parameter] public int StepNumber { get; set; }
+}
