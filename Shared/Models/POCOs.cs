@@ -18,7 +18,6 @@ namespace MoodSwings.Shared.Models
             {
                 return DateTime.Now > ExpiresOn;
 
-
             }
         }
     }

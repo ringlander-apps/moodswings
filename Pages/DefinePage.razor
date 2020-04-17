@@ -1,11 +1,12 @@
 @using MoodSwings.Services;
-@using MoodSwings.Shared.Models.ViewModels;
+@using MoodSwings.Shared.ViewModels.PlaylistViewModels;
 @using MoodSwings.Shared.Models;
 @using MoodSwings.Shared;
 @using MoodSwings.Shared.Components;
 @using MoodSwings.Shared.Components.Utilities;
 
-@inject MoodSwings.Shared.Models.ViewModels.SelectCategoryViewModel VM
+@inject MoodSwings.Shared.ViewModels.SelectCategoryViewModel VM
+@inject MoodSwings.Shared.Store.AppState AppState
 
 <div class="define-page">
     <div class="select-base">
@@ -21,20 +22,100 @@
     <div class="input-group-container">
         <div class="input-group-column">
             <label for="">Playlist selections</label>
+            <select @onchange="@SelectWasChanged" name="selectPlaylist" id="selectPlaylist">
+                <option value="0">Select...</option>
+                @if (AppState.Playlists!=null)
+                {
+                    @foreach (var pl in AppState.Playlists)
+                    {
+                        @if (pl.Id.Equals(AppState.SelectedPlaylistId))
+                        {
+                            <option selected value="@pl.Id">@pl.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@pl.Id">@pl.Name</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="select-category">
+        <div class="input-group-container">
+            <div class="input-group row" id="selectCategory">
+                <label class="input-label">Select Category</label>
+            </div>
+            <div class="center">
+                <div class="input-group row radio-input">
+                    <input type="radio" name="searchFilter" id="rbTempo" checked>
+                    <label for="rbTempo">Tempo</label>
+                </div>
+                <div class="input-group row radio-input">
+                    <input type="radio" name="searchFilter" id="rbGenre">
+                    <label for="rbGenre">Genre</label>
+                </div>
+                <div class="input-group row radio-input">
+                    <input type="radio" name="searchFilter" id="rbDance">
+                    <label for="rbDance">Danceability</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="edit-form">
+        <div class="input-group-container">
+            <div class="input-group column-tight">
+                <label for="txtBPM">BPM</label>
+                <input type="text" bind-value-oninput="@AppState.CurrentTrackDefinition.TempoModel.Tempo" @onchange="@TempoChanged"  name="txtBPM" id="txtBPM" placeholder="Enter BPM value"/>
+            </div>
+            <div class="input-group column-tight">
+                <label for="txtBPMDeviation">BPM Deviation</label>
+                <input type="text" bind-value-oninput="@AppState.CurrentTrackDefinition.TempoModel.Precision" @onchange="@PrecisionChanged" id="txtBPMDeviation" placeholder="Enter deviating threshold..."/>
+            </div>
+            <div class="input-group row check-input">
+                <label for="txtIncludeHalfTime">Include Half time</label>
+                <input type="checkbox" @onchange="@IncludeHalfTimeChanged" bind-value-oninput="@AppState.CurrentTrackDefinition.TempoModel.IncludeHalftime" name="chkAllowHalfTime" id="chkAllowHalfTime"/>
+            </div>
         </div>
     </div>
 
 </div>
 
-@functions{
-
-    private string MessageText { get; set; }
-    private void ShowMessage(MouseEventArgs e)
-    {
-        MessageText = e.ToString();
-    }
+@code{
     private void SetCategory(string s)
     {
         VM.SetCategory(s);
     }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await AppState.GetUserPlaylists();
+
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+    private void SelectWasChanged(ChangeEventArgs ea)
+    {
+        AppState.UpdateDefinition(new TracksDefinitionViewModel { Id = ea.Value.ToString() }, AppState.CurrentTrackDefinition.TempoModel);
+    }
+    private void PrecisionChanged(ChangeEventArgs ea)
+    {
+        AppState.UpdateDefinition(AppState.CurrentTrackDefinition, new TempoViewModel { Precision = Int32.Parse(ea.Value.ToString()) });
+    }
+    private void TempoChanged(ChangeEventArgs ea)
+    {
+        AppState.UpdateDefinition(AppState.CurrentTrackDefinition, new TempoViewModel { Tempo = Int32.Parse(ea.Value.ToString()) });
+    }
+
+    private void IncludeHalfTimeChanged(ChangeEventArgs ea)
+    {
+        //AppState.UpdateDefinition(AppState.CurrentTrackDefinition, new TempoViewModel { Tempo = Int32.Parse(ea.Value.ToString()) });
+        
+    }
+
 }

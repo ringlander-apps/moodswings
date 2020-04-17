@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using MoodSwings.Shared.Models;
 
-namespace MoodSwings.Shared.Models.ViewModels
+namespace MoodSwings.Shared.ViewModels
 {
     public class SelectCategoryViewModel : INotifyPropertyChanged
     {

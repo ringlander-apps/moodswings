@@ -1,11 +1,13 @@
 @using MoodSwings.Services;
 @using MoodSwings.Shared.Components;
-@using MoodSwings.Shared.Models.ViewModels;
+@using MoodSwings.Shared.ViewModels;
+@using MoodSwings.Shared.Store;
 
 @page "/home"
 
 @inject AuthenticationService AuthService
 @inject ConfigurationService ConfService
+@inject AppState State
 
 <div class="app">
     <section class="title-area">
@@ -37,7 +39,32 @@
             </div>
         </section>
         <section class="main-area-content">
-            <DefinePage/>
+            @if(State.CurrentStep.Equals(1)){
+                <DefinePage/>
+            }
+            
+        </section>
+        <section class="main-area-actions">
+            <div class="navigation-buttons">
+                @if(State.CurrentStep <= 3 && State.CurrentStep > 1)
+                {
+                    <button class="nav-button-left">Previous</button>
+                }
+                @if (State.CurrentStep<3&&State.CurrentStep>=1)
+                {
+                    @if (State.ModelIsValid)
+                    {
+                        <button class="nav-button-right">Next</button>
+                    }
+                    else
+                    {
+                        <button disabled=true class="nav-button-right">Next</button>
+                    }
+
+                }
+            </div>
+            
+            
         </section>
     </section>
 </div>
@@ -55,8 +82,12 @@
 
     bool CheckSelected(int id)
     {
-        //Should be checked in app state
-        return id.Equals(1) ? true : false;
+        return State.CurrentStep.Equals(id);
+
+    }
+
+    async Task MoveBack()
+    {
 
     }
 

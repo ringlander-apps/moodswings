@@ -1,4 +1,4 @@
-namespace MoodSwings.Shared.Models.ViewModels
+namespace MoodSwings.Shared.ViewModels
 {
     public class StepModel
     {

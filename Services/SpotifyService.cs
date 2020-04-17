@@ -1,4 +1,7 @@
 using MoodSwings.Shared.Models;
+using MoodSwings.Shared.Models.SpotifyModels;
+using MoodSwings.Shared.Models.DTO;
+
 using System;
 using System.Text;
 using Newtonsoft.Json;
@@ -17,6 +20,11 @@ namespace MoodSwings.Services
             _client = client;
 
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public async Task<User> GetCurrentUserProfile(AuthenticationToken token)
         {
 
@@ -40,6 +48,40 @@ namespace MoodSwings.Services
                 throw;
                 return null;
             }
+
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<Page<Playlist>> GetUserPlaylists(RequestDTO request)
+        {
+            try
+            {
+                var uri = "https://wt-820975869a3e549eb65406598aa10b11-0.sandbox.auth0-extend.com/get-playlists";
+                var json = JsonConvert.SerializeObject(request);
+
+                var response = await _client.PostAsync(uri, new StringContent(json, Encoding.UTF8, "application/json"));
+
+                var data = await response.Content.ReadAsStringAsync();
+
+                var playlists = JsonConvert.DeserializeObject<Page<Playlist>>(data, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+
+                System.Console.WriteLine(playlists);
+
+                return playlists;
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+                return null;
+            }
+
+
+
 
         }
 
